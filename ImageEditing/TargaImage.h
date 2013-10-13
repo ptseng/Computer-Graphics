@@ -19,6 +19,16 @@
 class Stroke;
 class DistanceImage;
 
+struct RGBcount {
+	int R;
+	int G;
+	int B;
+	int count;
+};
+
+// Comparison function for color pop;ularity sort
+bool ColorPopularityComparison(const RGBcount i, const RGBcount j);
+
 class TargaImage
 {
     // methods
@@ -99,6 +109,7 @@ public:
    unsigned int radius, x, y;	// Location for the stroke
    unsigned char r, g, b, a;	// Color
 };
+
 
 
 #endif

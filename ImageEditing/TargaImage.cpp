@@ -22,6 +22,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -44,6 +45,16 @@ double Binomial(int n, int s)
     return res;
 }// Binomial
 
+///////////////////////////////////////////////////////////////////////////////
+//
+//      Color Popularity Comparison Function
+//
+///////////////////////////////////////////////////////////////////////////////
+
+bool ColorPopularityComparison(const RGBcount i, const RGBcount j)
+{
+	return (i.count > j.count);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -220,11 +231,11 @@ bool TargaImage::To_Grayscale()
 	
 	for (int i = 0; i < width * height * 4; i+=4)
 	{
-		data[i] = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+		data[i] = (unsigned char) data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
 		data[i+1] = data[i];
 		data[i+2] = data[i];
-		data[i+3] = (char) 255;
-		cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
+		//data[i+3] = (char) 255;
+		//cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
 	}
     return true;
 }// To_Grayscale
@@ -238,8 +249,58 @@ bool TargaImage::To_Grayscale()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Quant_Uniform()
 {
-    ClearToBlack();
-    return false;
+	// Print diagnostic message
+    if (data)
+		cout << "Executing Quant_Uniform()" << endl;
+
+	// Find offset
+	int offset = width * height;
+	
+	// Initialize KV dictionaries
+	map<int,int> red;
+	map<int,int> green;
+	map<int,int> blue;
+	
+	red[0] = (32/2) - 1;
+	red[1] = (32/2 + 32) - 1;
+	red[2] = (32/2 + 2*32) - 1;
+	red[3] = (32/2 + 3*32) - 1;
+	red[4] = (32/2 + 4*32) - 1;
+	red[5] = (32/2 + 5*32) - 1;
+	red[6] = (32/2 + 6*32) - 1;
+	red[7] = (32/2 + 7*32) - 1;
+
+	green[0] = (32/2) - 1;
+	green[1] = (32/2 + 32) - 1;
+	green[2] = (32/2 + 2*32) - 1;
+	green[3] = (32/2 + 3*32) - 1;
+	green[4] = (32/2 + 4*32) - 1;
+	green[5] = (32/2 + 5*32) - 1;
+	green[6] = (32/2 + 6*32) - 1;
+	green[7] = (32/2 + 7*32) - 1;
+
+	blue[0] = (64/2) - 1;
+	blue[1] = (64/2 + 64) - 1;
+	blue[2] = (64/2 + 2*64) - 1;
+	blue[3] = (64/2 + 3*64) - 1;
+
+	for (int i = 0; i < width * height * 4; i+=4)
+	{
+		//Red
+		int redindex = floor((float) data[i]/32);
+		data[i] = red[redindex];
+		
+		//Green
+		int greenindex = floor((float) data[i+1]/32);
+		data[i+1] = green[greenindex];
+		
+		//Blue
+		int blueindex = floor((float) data[i+2]/64);
+		data[i+2] = blue[blueindex];
+		//data[i+3] = (char) 255;
+		//cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
+	}
+    return true;
 }// Quant_Uniform
 
 
@@ -251,8 +312,141 @@ bool TargaImage::Quant_Uniform()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Quant_Populosity()
 {
-    ClearToBlack();
-    return false;
+    // Print diagnostic message
+    if (data)
+		cout << "Executing Quant_Propulosity()" << endl;
+
+	int offset = width * height;
+	int arraysize = offset * 4;
+
+	// Step down to 32 levels of each primary
+	cout << "Stepping down to 32 levels of each primary" << endl;
+	map<int,int> red;
+	map<int,int> green;
+	map<int,int> blue;
+
+	for (int i = 0; i < 32; i++)
+	{
+		red[i] = (8/2 + i*8) - 1;
+	}
+
+	for (int i = 0; i < 32; i++)
+	{
+		green[i] = (8/2 + i*8) - 1;
+	}
+
+	for (int i = 0; i < 32; i++)
+	{
+		blue[i] = (8/2 + i*8) - 1;
+	}
+
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		//Red
+		int redindex = floor((float) data[i]/8);
+		data[i] = red[redindex];
+		
+		//Green
+		int greenindex = floor((float) data[i+1]/8);
+		data[i+1] = green[greenindex];
+		
+		//Blue
+		int blueindex = floor((float) data[i+2]/8);
+		data[i+2] = blue[blueindex];
+	}
+
+	// Find 256 most popular colors
+	cout << "Finding 256 most popular colors" << endl;
+
+	//Define Vector
+	std::vector<RGBcount> popularcolors;
+
+	//Add items to vector
+	cout << " -Counting occurrances of each color" << endl;
+
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		//Read pixel data
+		int red = data[i];
+		int green = data[i+1];
+		int blue = data[i+2];
+
+		// Check if color already registered
+		bool registered = false;
+
+		for(std::vector<RGBcount>::size_type i = 0; i != popularcolors.size() && !registered; i++) 
+		{
+			if (popularcolors[i].R == red && popularcolors[i].G == green && popularcolors[i].B == blue)
+			{
+				popularcolors[i].count++;
+				registered = true;
+			}
+		}	
+
+		//If color not yet registered
+		if (!registered)
+		{
+			RGBcount pixel;
+			pixel.R = red;
+			pixel.G = green;
+			pixel.B = blue;
+			pixel.count = 1;
+			popularcolors.push_back(pixel);
+		}
+	}
+
+	//Sort vector
+	cout << " -Sorting vector by popularity" << endl;
+	std::sort(popularcolors.begin(), popularcolors.end(), ColorPopularityComparison);
+
+	//Display 256 most popular colors
+	cout << endl << "** 256 most popular colors **" << endl << endl;
+	cout << "Total Colors Found: " << popularcolors.size() << endl << endl;
+	for (int i = 0; i < 256; ++i)
+	{
+		double percent = (double) popularcolors[i].count/(height*width);
+		cout.precision(3);
+		cout << "R: " << popularcolors[i].R << ", G: " << popularcolors[i].G << ", B: " << popularcolors[i].B << "  " << percent*100 << "%" << endl;
+	}
+
+	//Set all pixels to nearest 256 most popular colors
+	cout << "Set all pixels to nearest 256 most popular colors" << endl;
+
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		//Read pixel data
+		int red = data[i];
+		int green = data[i+1];
+		int blue = data[i+2]; 
+
+		//Iterate through popular colors
+		int index = 0;
+		float minvalue = 100000000.0;
+
+		for (int i = 0; i < 256; ++i)
+		{
+			int redsquare = abs(popularcolors[i].R-red)^2;
+			int greensquare = abs(popularcolors[i].G-green)^2;
+			int bluesquare = abs(popularcolors[i].B-blue)^2;
+
+			float sum_of_square = (float) redsquare+greensquare+bluesquare;
+
+			float distance = sqrt(sum_of_square);
+
+			if (minvalue > distance)
+			{
+				index = i;
+				minvalue = distance;
+			}
+		}
+
+		data[i]=popularcolors[index].R;
+		data[i+1]=popularcolors[index].G;
+		data[i+2]=popularcolors[index].B;
+	}
+	
+	cout << "Finished Quant_Propulosity()" << endl;
+    return true; 
 }// Quant_Populosity
 
 
@@ -263,8 +457,13 @@ bool TargaImage::Quant_Populosity()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Dither_Threshold()
 {
-    ClearToBlack();
-    return false;
+     // Print diagnostic message
+    if (data)
+		cout << "Executing Quant_Propulosity()" << endl;
+
+	int offset = width * height;
+	int arraysize = offset * 4;
+    return true;
 }// Dither_Threshold
 
 
@@ -688,7 +887,6 @@ void TargaImage::ClearToBlack()
     memset(data, 0, width * height * 4);
 }// ClearToBlack
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //      Helper function for the painterly filter; paint a stroke at
@@ -732,6 +930,7 @@ void TargaImage::Paint_Stroke(const Stroke& s) {
 ///////////////////////////////////////////////////////////////////////////////
 Stroke::Stroke() {}
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //      Build a Stroke
@@ -742,4 +941,8 @@ Stroke::Stroke(unsigned int iradius, unsigned int ix, unsigned int iy,
    radius(iradius),x(ix),y(iy),r(ir),g(ig),b(ib),a(ia)
 {
 }
+
+
+
+
 

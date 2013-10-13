@@ -1,0 +1,3 @@
+load wiz.tga
+quant-pop wiz.tga
+save 5.tga

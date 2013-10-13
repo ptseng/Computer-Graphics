@@ -1,4 +1,3 @@
 load colors-for-bw.tga
 gray colors-for-bw.tga
 save 1.tga
-diff 1.tga colors-for-bw-gray.tga

@@ -1,0 +1,3 @@
+load church.tga
+quant-pop church.tga
+save 4.tga
