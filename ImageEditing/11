@@ -1,0 +1,3 @@
+load church.tga
+filter-gauss-n 15
+save 11.tga

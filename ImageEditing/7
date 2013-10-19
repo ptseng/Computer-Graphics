@@ -1,0 +1,3 @@
+load church.tga
+dither-bright
+save 7.tga

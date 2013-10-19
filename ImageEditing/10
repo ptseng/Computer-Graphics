@@ -1,0 +1,3 @@
+load checkers.tga
+filter-gauss
+save 10.tga

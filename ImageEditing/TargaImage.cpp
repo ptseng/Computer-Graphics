@@ -23,6 +23,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <time.h>
 
 using namespace std;
 
@@ -445,7 +446,7 @@ bool TargaImage::Quant_Populosity()
 		data[i+2]=popularcolors[index].B;
 	}
 	
-	cout << "Finished Quant_Propulosity()" << endl;
+	cout << "Completed Quant_Propulosity()" << endl;
     return true; 
 }// Quant_Populosity
 
@@ -457,12 +458,31 @@ bool TargaImage::Quant_Populosity()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Dither_Threshold()
 {
-     // Print diagnostic message
+    // Print diagnostic message
     if (data)
-		cout << "Executing Quant_Propulosity()" << endl;
+		cout << "Executing Dither_Threshold()" << endl;
 
 	int offset = width * height;
 	int arraysize = offset * 4;
+
+	// Convert Image to Greyscale then Dither to 0.5 Threshold
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		float intensity = (float) (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114)/256;
+		if (intensity > 0.5f)
+		{
+			data[i] = 255;
+			data[i+1] = data[i];
+			data[i+2] = data[i];
+		}
+		else
+		{
+			data[i] = 0;
+			data[i+2] = 0;
+			data[i+3] = 0;
+		}
+	}
+
     return true;
 }// Dither_Threshold
 
@@ -474,8 +494,58 @@ bool TargaImage::Dither_Threshold()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Dither_Random()
 {
-    ClearToBlack();
-    return false;
+    // Print diagnostic message
+    if (data)
+		cout << "Executing Dither_Random()" << endl;
+
+	int offset = width * height;
+	int arraysize = offset * 4;
+
+	float averageintensity = 0.0f;
+
+	cout << "Calculating Average Intensity" << endl;
+	// Compute average intensity over the image
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		averageintensity += (float) (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114)/256;
+	}
+
+	averageintensity = averageintensity / offset;
+	cout << "Average Intensity: " << averageintensity << endl << endl;
+
+	// Seed Random
+	srand (time(NULL));
+
+	cout << "Applying Threshold based on Average Intensity, after adding random value betwen -0.2 and 0.2" << endl;
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		//Get Random Value betweeen -0.2 and 0.2
+		float random = -0.2f + (float)rand()/((float)RAND_MAX/(0.2-(-0.2)));
+
+		//Add random uniformly to pixel data
+		data[i] = data[i] + (random * 256);
+		data[i+1] = data[i+1] + (random * 256);
+		data[i+2] = data[i+2] + (random * 256); 
+		
+		//Find resulting intensity
+		float intensity = (float) (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114)/256;
+
+		//Apply Brightness Preserving Threshold Dithering
+		if (intensity > averageintensity)
+		{
+			data[i] = 255;
+			data[i+1] = data[i];
+			data[i+2] = data[i];
+		}
+		else
+		{
+			data[i] = 0;
+			data[i+2] = 0;
+			data[i+3] = 0;
+		}
+	}
+
+    return true;
 }// Dither_Random
 
 
@@ -500,8 +570,46 @@ bool TargaImage::Dither_FS()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Dither_Bright()
 {
-    ClearToBlack();
-    return false;
+    // Print diagnostic message
+    if (data)
+		cout << "Executing Dither_Bright()" << endl;
+
+	int offset = width * height;
+	int arraysize = offset * 4;
+
+	float averageintensity = 0.0f;
+
+	cout << "Calculating Average Intensity" << endl;
+	// Compute average intensity over the image
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		averageintensity += (float) (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114)/256;
+	}
+
+	averageintensity = averageintensity / offset;
+	cout << "Average Intensity: " << averageintensity << endl << endl;
+
+	cout << "Applying Threshold based on Average Intensity" << endl;
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		float intensity = (float) (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114)/256;
+
+		if (intensity > averageintensity)
+		{
+			data[i] = 255;
+			data[i+1] = data[i];
+			data[i+2] = data[i];
+		}
+		else
+		{
+			data[i] = 0;
+			data[i+2] = 0;
+			data[i+3] = 0;
+		}
+	}
+
+	cout << "Completed Dither_Bright()" << endl;
+    return true;
 }// Dither_Bright
 
 
@@ -694,8 +802,92 @@ bool TargaImage::Filter_Bartlett()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::Filter_Gaussian()
 {
-    ClearToBlack();
-    return false;
+
+	// Print diagnostic message
+    if (data)
+		cout << "Executing Filter_Gaussian()" << endl;
+
+	int offset = width * height;
+	int arraysize = offset * 4;
+	int rowsize = width * 4;
+
+	//Setup Filter Parameters
+    const int size = 5;
+
+	//Construct 1D mask
+	int mask1D[size];
+
+	for (int n = 0; n < size; ++n)
+	{
+		mask1D[n] = Binomial(size-1, n);
+	}
+
+	//Construct 2D mask
+	int mask2D [size][size];
+
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			mask2D[i][j] = mask1D[i] * mask1D[j];
+			cout << mask2D[i][j] << endl;
+		}
+	}
+
+	// Setup temporary image
+	unsigned char	*datatemp;
+	datatemp = new unsigned char[width * height * 4];
+
+	// Iterate through data
+	cout << "Applying 5x5 Gaussian Filter" << endl;
+
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		float sumR = 0.0f;
+		float sumG = 0.0f;
+		float sumB = 0.0f;
+		int count = 0;
+
+		//Calculate current pixel x and y
+		int currentrow = i / (rowsize-1);
+		int currentcolumn = ((i - (currentrow*(rowsize-1))) % (rowsize-1))/4;
+
+		//Iterate through 2D Mask
+		for (int j = 0; j < size; j++)	//Row
+		{	
+			for (int k = 0; k < size; k++) //Column
+			{
+				int center = (size/2); //2
+				int moverow = (j - center); //Pixel
+				int movecolumn = (k - center); //Pixel
+				int index2 = ((movecolumn*4) + (moverow*(width)*4));  //Subpixel
+
+				if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn >= width - 1) 
+					continue;
+
+				if (currentrow + moverow <= -1 || currentrow + moverow >= height - 1)
+					continue;
+
+				sumR = sumR + (float) mask2D[j][k]*data[i+index2];
+				sumG = sumG + (float) mask2D[j][k]*data[i+index2+1];
+				sumB = sumB + (float) mask2D[j][k]*data[i+index2+2];
+				count = count + mask2D[j][k];
+			}
+		}
+
+		datatemp[i] = sumR / count;
+		datatemp[i+1] = sumG / count;
+		datatemp[i+2] = sumB / count;
+		datatemp[i+3] = data[i+3];
+	}
+
+	//memcpy function in case you need it (destination, source, bytes)
+    //memcpy(datatemp, data, sizeof(unsigned char) * width * height * 4);
+
+
+	data = datatemp;
+
+    return true;
 }// Filter_Gaussian
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -707,8 +899,101 @@ bool TargaImage::Filter_Gaussian()
 
 bool TargaImage::Filter_Gaussian_N( unsigned int N )
 {
-    ClearToBlack();
-   return false;
+	// Print diagnostic message
+    if (data)
+		cout << "Executing Filter_Gaussian_N(" << N << ")" << endl;
+
+	int offset = width * height;
+	int arraysize = offset * 4;
+	int rowsize = width * 4;
+
+	//Setup Filter Parameters
+    const unsigned int size = N;
+
+	//Construct 1D mask
+	int * mask1D = new int[size];
+
+	for (int n = 0; n < size; ++n)
+	{
+		mask1D[n] = Binomial(size-1, n);
+	}
+
+	//Construct 2D mask vector
+	std::vector< std::vector<int> > mask2D;
+
+	mask2D.resize(size);
+    for(int i = 0 ; i < size ; ++i)
+    {
+    	mask2D[i].resize(size);
+    }
+
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			mask2D[i][j] = mask1D[i] * mask1D[j];
+			cout << mask2D[i][j] << endl;
+		}
+	}
+
+	//Cleanup
+
+	delete [] mask1D;
+
+	// Setup temporary image
+	unsigned char	*datatemp;
+	datatemp = new unsigned char[width * height * 4];
+
+	// Iterate through data
+	cout << "Applying " << size << "x" << size << " Gaussian Filter" << endl;
+
+	for (int i = 0; i < arraysize; i+=4)
+	{
+		float sumR = 0.0f;
+		float sumG = 0.0f;
+		float sumB = 0.0f;
+		int count = 0;
+
+		//Calculate current pixel x and y
+		int currentrow = i / (rowsize-1);
+		int currentcolumn = ((i - (currentrow*(rowsize-1))) % (rowsize-1))/4;
+
+		//Iterate through 2D Mask
+		for (int j = 0; j < size; j++)	//Row
+		{	
+			for (int k = 0; k < size; k++) //Column
+			{
+				int center = (size/2); //2
+				int moverow = (j - center); //Pixel
+				int movecolumn = (k - center); //Pixel
+				int index2 = ((movecolumn*4) + (moverow*(width)*4));  //Subpixel
+
+				if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn >= width - 1) 
+					continue;
+
+				if (currentrow + moverow <= -1 || currentrow + moverow >= height - 1)
+					continue;
+
+				sumR = sumR + (float) mask2D[j][k]*data[i+index2];
+				sumG = sumG + (float) mask2D[j][k]*data[i+index2+1];
+				sumB = sumB + (float) mask2D[j][k]*data[i+index2+2];
+				count = count + mask2D[j][k];
+			}
+		}
+
+		datatemp[i] = sumR / count;
+		datatemp[i+1] = sumG / count;
+		datatemp[i+2] = sumB / count;
+		datatemp[i+3] = data[i+3];
+	}
+
+	//memcpy function in case you need it (destination, source, bytes)
+    //memcpy(datatemp, data, sizeof(unsigned char) * width * height * 4);
+
+
+	data = datatemp;
+
+    return true;
 }// Filter_Gaussian_N
 
 

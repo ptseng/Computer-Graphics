@@ -1,0 +1,3 @@
+load church.tga
+dither-thresh church.tga
+save 6.tga
