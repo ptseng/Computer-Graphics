@@ -1,0 +1,3 @@
+load church.tga
+quant-unif church.tga
+save 2.tga

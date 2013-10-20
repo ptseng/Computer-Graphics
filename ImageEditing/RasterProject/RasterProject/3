@@ -1,0 +1,3 @@
+load wiz.tga
+quant-unif wiz.tga
+save 3.tga

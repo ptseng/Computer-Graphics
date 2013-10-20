@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8C9B5A0C-6CA9-4B3A-8902-17FFE56CB060</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RasterProject</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7412A873-B118-42CD-970C-75B0B51752C0</key>
+		<string>https://github.com/ptseng/VisualStudio.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ImageEditing/RasterProject/RasterProject.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7412A873-B118-42CD-970C-75B0B51752C0</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ptseng/VisualStudio.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7412A873-B118-42CD-970C-75B0B51752C0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7412A873-B118-42CD-970C-75B0B51752C0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VisualStudio</string>
+		</dict>
+	</array>
+</dict>
+</plist>

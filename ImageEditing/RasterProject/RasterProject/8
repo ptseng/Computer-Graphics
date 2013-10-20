@@ -1,0 +1,3 @@
+load church.tga
+dither-rand
+save 8.tga
