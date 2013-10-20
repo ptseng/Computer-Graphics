@@ -438,7 +438,11 @@ bool TargaImage::Quant_Populosity()
 	//Display 256 most popular colors
 	cout << endl << "** 256 most popular colors **" << endl << endl;
 	cout << "Total Colors Found: " << popularcolors.size() << endl << endl;
-	for (int i = 0; i < 256; ++i)
+    int topcolors = 256;
+    if (popularcolors.size() < 256)
+        topcolors = (int) popularcolors.size();
+    
+	for (int i = 0; i < topcolors; ++i)
 	{
 		double percent = (double) popularcolors[i].count/(height*width);
 		cout.precision(3);
