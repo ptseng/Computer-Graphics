@@ -29,7 +29,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FB1055EA181355BA00B169B8 /* RasterProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = RasterProject; path = "/Users/ptseng/Developer/Personal/CS 447/VisualStudio/ImageEditing/RasterProject/Rasterproject/RasterProject"; sourceTree = "<absolute>"; };
 		FB1055ED181355BA00B169B8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FB1055EF181355BA00B169B8 /* RasterProject.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = RasterProject.1; sourceTree = "<group>"; };
 		FB1056191813568700B169B8 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 		FB1056241813568700B169B8 /* ScriptHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptHandler.h; sourceTree = "<group>"; };
 		FB1056251813568700B169B8 /* TargaImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TargaImage.cpp; sourceTree = "<group>"; };
 		FB1056261813568700B169B8 /* TargaImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargaImage.h; sourceTree = "<group>"; };
+		FB10563218147FDF00B169B8 /* RasterProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RasterProject; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				FB1055EC181355BA00B169B8 /* RasterProject */,
+				FB10563218147FDF00B169B8 /* RasterProject */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,7 +101,7 @@
 			);
 			name = RasterProject;
 			productName = RasterProject;
-			productReference = FB1055EA181355BA00B169B8 /* RasterProject */;
+			productReference = FB10563218147FDF00B169B8 /* RasterProject */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -218,6 +219,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CONFIGURATION_BUILD_DIR = Rasterproject/;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/fltk/1.3.2/lib",
 					"-lfltk",
@@ -235,6 +237,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/fltk/1.3.2/lib",
 					"-lfltk",
