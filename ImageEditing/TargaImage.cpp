@@ -463,7 +463,7 @@ bool TargaImage::Quant_Populosity()
 		int index = 0;
 		float minvalue = 100000000.0;
 
-		for (int i = 0; i < 256; ++i)
+		for (int i = 0; i < topcolors; ++i)
 		{
 			int redsquare = abs(popularcolors[i].R-red)^2;
 			int greensquare = abs(popularcolors[i].G-green)^2;
