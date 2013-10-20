@@ -26,7 +26,7 @@ struct RGBcount {
 	int count;
 };
 
-// Comparison function for color pop;ularity sort
+// Comparison function for color popularity sort
 bool ColorPopularityComparison(const RGBcount i, const RGBcount j);
 
 class TargaImage
@@ -77,6 +77,8 @@ class TargaImage
         bool Double_Size();
         bool Resize(float scale);
         bool Rotate(float angleDegrees);
+    
+        bool Benchmark();
 
     private:
 	// helper function for format conversion

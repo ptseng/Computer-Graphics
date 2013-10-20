@@ -24,6 +24,7 @@ const char      c_sWhiteSpace[]         = " \t\n\r";
 const char      c_asCommands[][32]      = { "load",                     // valid commands
                                             "save",
                                             "run",
+                                            "benchmark",
                                             "gray",
                                             "quant-unif",
                                             "quant-pop",
@@ -32,8 +33,8 @@ const char      c_asCommands[][32]      = { "load",                     // valid
                                             "dither-fs",
                                             "dither-bright",
                                             "dither-cluster",
-					    "dither-pattern",
-					    "dither-color",
+                                            "dither-pattern",
+                                            "dither-color",
                                             "filter-box",
                                             "filter-bartlett",
                                             "filter-gauss",
@@ -58,6 +59,7 @@ enum ECommands          // command ids
     LOAD,
     SAVE,
     RUN,
+    BENCHMARK,
     GREY,
     QUANT_UNIF,
     QUANT_POP,
@@ -159,7 +161,12 @@ bool CScriptHandler::HandleCommand(const char* sCommand, TargaImage*& pImage)
             bResult = HandleScriptFile(strtok(NULL, c_sWhiteSpace), pImage);
             break;
         }// RUN
-
+        
+        case BENCHMARK:
+        {
+            bResult = pImage->Benchmark();
+            break;
+        }
         case GREY:
         {
             bResult = pImage->To_Grayscale();

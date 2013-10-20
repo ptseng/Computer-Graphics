@@ -215,7 +215,29 @@ TargaImage* TargaImage::Load_Image(char *filename)
     return result;
 }// Load_Image
 
+//Benchmarking Function
+bool TargaImage::Benchmark()
+{
+    if (data)
+		cout << "Executing Benchmark()" << endl;
+    
+    clock_t time;
+    time = clock();
 
+    To_Grayscale();
+    Quant_Uniform();
+    Quant_Populosity();
+    Dither_Threshold();
+    Dither_Random();
+    Dither_Bright();
+    Filter_Gaussian();
+    Filter_Gaussian_N(15);
+    
+    time = clock() - time;
+    cout << endl << "Total Time:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
+    
+    return true;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //      Convert image to grayscale.  Red, green, and blue channels should all 
