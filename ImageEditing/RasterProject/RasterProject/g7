@@ -1,0 +1,3 @@
+load grumpy.tga
+dither-bright
+save g7.tga

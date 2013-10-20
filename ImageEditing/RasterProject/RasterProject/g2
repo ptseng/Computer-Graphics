@@ -1,0 +1,3 @@
+load grumpy.tga
+quant-unif
+save g2.tga

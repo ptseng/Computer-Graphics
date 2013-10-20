@@ -1,0 +1,3 @@
+load grumpy.tga
+dither-thresh
+save g6.tga

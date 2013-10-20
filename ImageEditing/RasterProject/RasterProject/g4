@@ -1,0 +1,3 @@
+load grumpy.tga
+quant-pop
+save g4.tga

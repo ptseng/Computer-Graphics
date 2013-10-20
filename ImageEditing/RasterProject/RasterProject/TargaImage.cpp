@@ -23,7 +23,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
-#include <time.h>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -228,16 +228,24 @@ bool TargaImage::To_Grayscale()
     if (data)
 		cout << "Executing To_Grayscale()" << endl;
 
-	int offset = width * height;
-	
-	for (int i = 0; i < width * height * 4; i+=4)
-	{
-		data[i] = (unsigned char) data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
-		data[i+1] = data[i];
-		data[i+2] = data[i];
-		//data[i+3] = (char) 255;
-		//cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
-	}
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
+    
+
+    for (int i = 0; i < width * height * 4; i+=4)
+    {
+        data[i] = (unsigned char) data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+        data[i+1] = data[i];
+        data[i+2] = data[i];
+        //data[i+3] = (char) 255;
+        //cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
+    }
+    
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true;
 }// To_Grayscale
 
@@ -254,8 +262,8 @@ bool TargaImage::Quant_Uniform()
     if (data)
 		cout << "Executing Quant_Uniform()" << endl;
 
-	// Find offset
-	int offset = width * height;
+	struct timeval timeStart,timeEnd;
+     gettimeofday(&timeStart, NULL);
 	
 	// Initialize KV dictionaries
 	map<int,int> red;
@@ -301,6 +309,12 @@ bool TargaImage::Quant_Uniform()
 		//data[i+3] = (char) 255;
 		//cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
 	}
+    
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true;
 }// Quant_Uniform
 
@@ -317,6 +331,10 @@ bool TargaImage::Quant_Populosity()
     if (data)
 		cout << "Executing Quant_Propulosity()" << endl;
 
+    
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
+    
 	int offset = width * height;
 	int arraysize = offset * 4;
 
@@ -394,6 +412,7 @@ bool TargaImage::Quant_Populosity()
 			pixel.count = 1;
 			popularcolors.push_back(pixel);
 		}
+        
 	}
 
 	//Sort vector
@@ -446,7 +465,11 @@ bool TargaImage::Quant_Populosity()
 		data[i+2]=popularcolors[index].B;
 	}
 	
-	cout << "Completed Quant_Propulosity()" << endl;
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true; 
 }// Quant_Populosity
 
@@ -462,6 +485,9 @@ bool TargaImage::Dither_Threshold()
     if (data)
 		cout << "Executing Dither_Threshold()" << endl;
 
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
+    
 	int offset = width * height;
 	int arraysize = offset * 4;
 
@@ -483,6 +509,11 @@ bool TargaImage::Dither_Threshold()
 		}
 	}
 
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true;
 }// Dither_Threshold
 
@@ -498,6 +529,9 @@ bool TargaImage::Dither_Random()
     if (data)
 		cout << "Executing Dither_Random()" << endl;
 
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
+    
 	int offset = width * height;
 	int arraysize = offset * 4;
 
@@ -514,7 +548,7 @@ bool TargaImage::Dither_Random()
 	cout << "Average Intensity: " << averageintensity << endl << endl;
 
 	// Seed Random
-	srand (time(NULL));
+	srand ((unsigned int) time(NULL));
 
 	cout << "Applying Threshold based on Average Intensity, after adding random value betwen -0.2 and 0.2" << endl;
 	for (int i = 0; i < arraysize; i+=4)
@@ -545,6 +579,11 @@ bool TargaImage::Dither_Random()
 		}
 	}
 
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true;
 }// Dither_Random
 
@@ -574,6 +613,9 @@ bool TargaImage::Dither_Bright()
     if (data)
 		cout << "Executing Dither_Bright()" << endl;
 
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
+    
 	int offset = width * height;
 	int arraysize = offset * 4;
 
@@ -608,7 +650,11 @@ bool TargaImage::Dither_Bright()
 		}
 	}
 
-	cout << "Completed Dither_Bright()" << endl;
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true;
 }// Dither_Bright
 
@@ -803,89 +849,102 @@ bool TargaImage::Filter_Bartlett()
 bool TargaImage::Filter_Gaussian()
 {
 
-	// Print diagnostic message
+    // Print diagnostic message
     if (data)
-		cout << "Executing Filter_Gaussian()" << endl;
+        cout << "Executing Filter_Gaussian()" << endl;
 
-	int offset = width * height;
-	int arraysize = offset * 4;
-	int rowsize = width * 4;
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
 
-	//Setup Filter Parameters
+    const int offset = width * height;
+    const int arraysize = offset * 4;
+    
+    //Setup Filter Parameters
     const int size = 5;
+    const int center = (size/2); //2
+    
+    //Construct 1D mask
+    int mask1D[size];
 
-	//Construct 1D mask
-	int mask1D[size];
+    for (int n = 0; n < size; ++n)
+    {
+        mask1D[n] = Binomial(size-1, n);
+    }
 
-	for (int n = 0; n < size; ++n)
-	{
-		mask1D[n] = Binomial(size-1, n);
-	}
+    //Construct 2D mask
+    int mask2D [size][size];
 
-	//Construct 2D mask
-	int mask2D [size][size];
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            mask2D[i][j] = mask1D[i] * mask1D[j];
+            cout << mask2D[i][j] << "\t";
+        }
+        cout << endl;
+    }
 
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			mask2D[i][j] = mask1D[i] * mask1D[j];
-			cout << mask2D[i][j] << endl;
-		}
-	}
+    // Setup temporary image
+    unsigned char * datatemp;
+    datatemp = new unsigned char[width * height * 4];
 
-	// Setup temporary image
-	unsigned char	*datatemp;
-	datatemp = new unsigned char[width * height * 4];
+    // Iterate through data
+    cout << "Applying 5x5 Gaussian Filter" << endl;
 
-	// Iterate through data
-	cout << "Applying 5x5 Gaussian Filter" << endl;
+    for (int i = 0; i < arraysize; i+=4)
+    {
+        
+        
+        float sumR = 0.0f;
+        float sumG = 0.0f;
+        float sumB = 0.0f;
+        int count = 0;
 
-	for (int i = 0; i < arraysize; i+=4)
-	{
-		float sumR = 0.0f;
-		float sumG = 0.0f;
-		float sumB = 0.0f;
-		int count = 0;
+        //Calculate current pixel x and y
+        int currentrow = (i/4) / width;
+        int currentcolumn = ((i/4) % width);
+        
+        //Iterate through 2D Mask
+        for (int j = 0; j < size; j++)	//Row
+        {
+            int moverow = (j - center); //Pixel
+            for (int k = 0; k < size; k++) //Column
+            {
+                int movecolumn = (k - center); //Pixel
+                int index2 = ((movecolumn*4) + (moverow*(width)*4));  //Subpixel
+                
+                if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn >= width - 1)
+                {
+                    //cout << "Column: " << currentcolumn << endl;
+                    continue;
+                }
 
-		//Calculate current pixel x and y
-		int currentrow = i / (rowsize-1);
-		int currentcolumn = ((i - (currentrow*(rowsize-1))) % (rowsize-1))/4;
+                if (currentrow + moverow <= -1 || currentrow + moverow >= height)
+                {
+                    //cout << "Row: " << currentrow << endl;
+                    continue;
+                }
+                
+                sumR = sumR + (float) mask2D[j][k]*data[i+index2];
+                sumG = sumG + (float) mask2D[j][k]*data[i+index2+1];
+                sumB = sumB + (float) mask2D[j][k]*data[i+index2+2];
+                count = count + mask2D[j][k];
+            }
+        }
 
-		//Iterate through 2D Mask
-		for (int j = 0; j < size; j++)	//Row
-		{	
-			for (int k = 0; k < size; k++) //Column
-			{
-				int center = (size/2); //2
-				int moverow = (j - center); //Pixel
-				int movecolumn = (k - center); //Pixel
-				int index2 = ((movecolumn*4) + (moverow*(width)*4));  //Subpixel
+        datatemp[i] = sumR / count;
+        datatemp[i+1] = sumG / count;
+        datatemp[i+2] = sumB / count;
+        datatemp[i+3] = data[i+3];
+    }
 
-				if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn >= width - 1) 
-					continue;
-
-				if (currentrow + moverow <= -1 || currentrow + moverow >= height - 1)
-					continue;
-
-				sumR = sumR + (float) mask2D[j][k]*data[i+index2];
-				sumG = sumG + (float) mask2D[j][k]*data[i+index2+1];
-				sumB = sumB + (float) mask2D[j][k]*data[i+index2+2];
-				count = count + mask2D[j][k];
-			}
-		}
-
-		datatemp[i] = sumR / count;
-		datatemp[i+1] = sumG / count;
-		datatemp[i+2] = sumB / count;
-		datatemp[i+3] = data[i+3];
-	}
-
-	//memcpy function in case you need it (destination, source, bytes)
-    //memcpy(datatemp, data, sizeof(unsigned char) * width * height * 4);
-
-
-	data = datatemp;
+    memcpy(data, datatemp, sizeof(unsigned char) * width * height * 4);
+    delete [] datatemp;
+    
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
 
     return true;
 }// Filter_Gaussian
@@ -899,100 +958,104 @@ bool TargaImage::Filter_Gaussian()
 
 bool TargaImage::Filter_Gaussian_N( unsigned int N )
 {
-	// Print diagnostic message
+    // Print diagnostic message
     if (data)
-		cout << "Executing Filter_Gaussian_N(" << N << ")" << endl;
+        cout << "Executing Filter_Gaussian_N(" << N << ")" << endl;
 
-	int offset = width * height;
-	int arraysize = offset * 4;
-	int rowsize = width * 4;
+    struct timeval timeStart,timeEnd;
+    gettimeofday(&timeStart, NULL);
 
-	//Setup Filter Parameters
+    const int offset = width * height;
+    const int arraysize = offset * 4;
+
+    //Setup Filter Parameters
     const unsigned int size = N;
+    const int center = (size/2); //2
 
-	//Construct 1D mask
-	int * mask1D = new int[size];
+    //Construct 1D mask
+    int * mask1D = new int[size];
 
-	for (int n = 0; n < size; ++n)
-	{
-		mask1D[n] = Binomial(size-1, n);
-	}
-
-	//Construct 2D mask vector
-	std::vector< std::vector<int> > mask2D;
-
-	mask2D.resize(size);
-    for(int i = 0 ; i < size ; ++i)
+    for (int n = 0; n < size; ++n)
     {
-    	mask2D[i].resize(size);
+        mask1D[n] = Binomial(size-1, n);
     }
 
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			mask2D[i][j] = mask1D[i] * mask1D[j];
-			cout << mask2D[i][j] << endl;
-		}
-	}
+    //Construct 2D mask vector
+    std::vector< std::vector<int> > mask2D;
 
-	//Cleanup
+    mask2D.resize(size);
+    for(int i = 0 ; i < size ; ++i)
+    {
+        mask2D[i].resize(size);
+    }
 
-	delete [] mask1D;
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            mask2D[i][j] = mask1D[i] * mask1D[j];
+            cout << mask2D[i][j] << "\t";
+        }
+        
+        cout << endl;
+    }
 
-	// Setup temporary image
-	unsigned char	*datatemp;
-	datatemp = new unsigned char[width * height * 4];
+    //Cleanup
+    delete [] mask1D;
 
-	// Iterate through data
-	cout << "Applying " << size << "x" << size << " Gaussian Filter" << endl;
+    // Setup temporary image
+    unsigned char * datatemp;
+    datatemp = new unsigned char[width * height * 4];
 
-	for (int i = 0; i < arraysize; i+=4)
-	{
-		float sumR = 0.0f;
-		float sumG = 0.0f;
-		float sumB = 0.0f;
-		int count = 0;
+    // Iterate through data
+    cout << "Applying " << size << "x" << size << " Gaussian Filter" << endl;
 
-		//Calculate current pixel x and y
-		int currentrow = i / (rowsize-1);
-		int currentcolumn = ((i - (currentrow*(rowsize-1))) % (rowsize-1))/4;
+    for (int i = 0; i < arraysize; i+=4)
+    {
+        float sumR = 0.0f;
+        float sumG = 0.0f;
+        float sumB = 0.0f;
+        int count = 0;
 
-		//Iterate through 2D Mask
-		for (int j = 0; j < size; j++)	//Row
-		{	
-			for (int k = 0; k < size; k++) //Column
-			{
-				int center = (size/2); //2
-				int moverow = (j - center); //Pixel
-				int movecolumn = (k - center); //Pixel
-				int index2 = ((movecolumn*4) + (moverow*(width)*4));  //Subpixel
+        //Calculate current pixel x and y
+        int currentrow = (i/4) / width;
+        int currentcolumn = ((i/4) % width);
+        
+        //Iterate through 2D Mask
+        for (int j = 0; j < size; j++)	//Row
+        {
+            int moverow = (j - center); //Pixel
+            for (int k = 0; k < size; k++) //Column
+            {
+                int movecolumn = (k - center); //Pixel
+                int index2 = ((movecolumn*4) + (moverow*(width)*4));  //Subpixel
 
-				if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn >= width - 1) 
-					continue;
+                if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn >= width - 1) 
+                    continue;
 
-				if (currentrow + moverow <= -1 || currentrow + moverow >= height - 1)
-					continue;
+                if (currentrow + moverow <= -1 || currentrow + moverow >= height)
+                    continue;
 
-				sumR = sumR + (float) mask2D[j][k]*data[i+index2];
-				sumG = sumG + (float) mask2D[j][k]*data[i+index2+1];
-				sumB = sumB + (float) mask2D[j][k]*data[i+index2+2];
-				count = count + mask2D[j][k];
-			}
-		}
+                sumR = sumR + (float) mask2D[j][k]*data[i+index2];
+                sumG = sumG + (float) mask2D[j][k]*data[i+index2+1];
+                sumB = sumB + (float) mask2D[j][k]*data[i+index2+2];
+                count = count + mask2D[j][k];
+            }
+        }
+        datatemp[i] = sumR / count;
+        datatemp[i+1] = sumG / count;
+        datatemp[i+2] = sumB / count;
+        datatemp[i+3] = data[i+3];
+    }
 
-		datatemp[i] = sumR / count;
-		datatemp[i+1] = sumG / count;
-		datatemp[i+2] = sumB / count;
-		datatemp[i+3] = data[i+3];
-	}
+    memcpy(data, datatemp, sizeof(unsigned char) * width * height * 4);
+    delete [] datatemp;
 
-	//memcpy function in case you need it (destination, source, bytes)
-    //memcpy(datatemp, data, sizeof(unsigned char) * width * height * 4);
-
-
-	data = datatemp;
-
+    gettimeofday(&timeEnd, NULL);
+    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
+    elapsed = elapsed / 1000000;
+    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    
     return true;
 }// Filter_Gaussian_N
 

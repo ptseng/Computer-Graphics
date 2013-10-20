@@ -11,7 +11,6 @@
 		FB1055F0181355BA00B169B8 /* RasterProject.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB1055EF181355BA00B169B8 /* RasterProject.1 */; };
 		FB10562D1813568700B169B8 /* ImageWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB10561B1813568700B169B8 /* ImageWidget.cpp */; };
 		FB10562E1813568700B169B8 /* libtarga.c in Sources */ = {isa = PBXBuildFile; fileRef = FB10561D1813568700B169B8 /* libtarga.c */; };
-		FB10562F1813568700B169B8 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = FB1056201813568700B169B8 /* Makefile */; };
 		FB1056301813568700B169B8 /* ScriptHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB1056231813568700B169B8 /* ScriptHandler.cpp */; };
 		FB1056311813568700B169B8 /* TargaImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB1056251813568700B169B8 /* TargaImage.cpp */; };
 /* End PBXBuildFile section */
@@ -30,7 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FB1055EA181355BA00B169B8 /* RasterProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RasterProject; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB1055EA181355BA00B169B8 /* RasterProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = RasterProject; path = "/Users/ptseng/Developer/Personal/CS 447/VisualStudio/ImageEditing/RasterProject/Rasterproject/RasterProject"; sourceTree = "<absolute>"; };
 		FB1055ED181355BA00B169B8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FB1055EF181355BA00B169B8 /* RasterProject.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = RasterProject.1; sourceTree = "<group>"; };
 		FB1056191813568700B169B8 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
@@ -40,7 +39,6 @@
 		FB10561D1813568700B169B8 /* libtarga.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libtarga.c; sourceTree = "<group>"; };
 		FB10561E1813568700B169B8 /* libtarga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libtarga.h; sourceTree = "<group>"; };
 		FB10561F1813568700B169B8 /* linkage.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = linkage.tga; sourceTree = "<group>"; };
-		FB1056201813568700B169B8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		FB1056231813568700B169B8 /* ScriptHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptHandler.cpp; sourceTree = "<group>"; };
 		FB1056241813568700B169B8 /* ScriptHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptHandler.h; sourceTree = "<group>"; };
 		FB1056251813568700B169B8 /* TargaImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TargaImage.cpp; sourceTree = "<group>"; };
@@ -62,16 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				FB1055EC181355BA00B169B8 /* RasterProject */,
-				FB1055EB181355BA00B169B8 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		FB1055EB181355BA00B169B8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FB1055EA181355BA00B169B8 /* RasterProject */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		FB1055EC181355BA00B169B8 /* RasterProject */ = {
@@ -84,7 +73,6 @@
 				FB10561D1813568700B169B8 /* libtarga.c */,
 				FB10561E1813568700B169B8 /* libtarga.h */,
 				FB10561F1813568700B169B8 /* linkage.tga */,
-				FB1056201813568700B169B8 /* Makefile */,
 				FB1056231813568700B169B8 /* ScriptHandler.cpp */,
 				FB1056241813568700B169B8 /* ScriptHandler.h */,
 				FB1056251813568700B169B8 /* TargaImage.cpp */,
@@ -132,7 +120,7 @@
 				en,
 			);
 			mainGroup = FB1055E1181355BA00B169B8;
-			productRefGroup = FB1055EB181355BA00B169B8 /* Products */;
+			productRefGroup = FB1055E1181355BA00B169B8;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -148,7 +136,6 @@
 			files = (
 				FB1055EE181355BA00B169B8 /* main.cpp in Sources */,
 				FB10562D1813568700B169B8 /* ImageWidget.cpp in Sources */,
-				FB10562F1813568700B169B8 /* Makefile in Sources */,
 				FB1056311813568700B169B8 /* TargaImage.cpp in Sources */,
 				FB1056301813568700B169B8 /* ScriptHandler.cpp in Sources */,
 				FB10562E1813568700B169B8 /* libtarga.c in Sources */,
@@ -230,6 +217,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CONFIGURATION_BUILD_DIR = Rasterproject/;
 				OTHER_LDFLAGS = (
 					"-L/usr/local/Cellar/fltk/1.3.2/lib",
 					"-lfltk",
@@ -238,6 +226,7 @@
 					Cocoa,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = build;
 				USER_HEADER_SEARCH_PATHS = /usr/local/Cellar/fltk/1.3.2/include;
 			};
 			name = Debug;

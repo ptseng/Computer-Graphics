@@ -1,0 +1,3 @@
+load grumpy.tga
+filter-gauss-n 15
+save g11.tga

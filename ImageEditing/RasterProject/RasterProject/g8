@@ -1,0 +1,3 @@
+load grumpy.tga
+dither-rand
+save g8.tga

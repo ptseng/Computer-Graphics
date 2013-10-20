@@ -1,0 +1,3 @@
+load grumpy.tga
+filter-gauss
+save g9.tga

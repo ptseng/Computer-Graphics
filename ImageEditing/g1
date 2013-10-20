@@ -1,0 +1,3 @@
+load grumpy.tga
+gray
+save g1.tga

@@ -1,3 +1,3 @@
 load church.tga
-dither-thresh church.tga
+dither-thresh
 save 6.tga
