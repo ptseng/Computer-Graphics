@@ -23,7 +23,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
-#include <sys/time.h>
+#include <time.h>
 
 using namespace std;
 
@@ -228,9 +228,8 @@ bool TargaImage::To_Grayscale()
     if (data)
 		cout << "Executing To_Grayscale()" << endl;
 
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
-    
+    clock_t time;
+    time = clock();
 
     for (int i = 0; i < width * height * 4; i+=4)
     {
@@ -241,10 +240,8 @@ bool TargaImage::To_Grayscale()
         //cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
     }
     
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true;
 }// To_Grayscale
@@ -262,8 +259,8 @@ bool TargaImage::Quant_Uniform()
     if (data)
 		cout << "Executing Quant_Uniform()" << endl;
 
-	struct timeval timeStart,timeEnd;
-     gettimeofday(&timeStart, NULL);
+    clock_t time;
+    time = clock();
 	
 	// Initialize KV dictionaries
 	map<int,int> red;
@@ -310,10 +307,8 @@ bool TargaImage::Quant_Uniform()
 		//cout << "(" << (int) data[i] << "," << (int) data[i+1] << "," << (int) data[i+2] << ")" << " Alpha: " << (int) data[i+3] << endl;
 	}
     
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true;
 }// Quant_Uniform
@@ -331,9 +326,8 @@ bool TargaImage::Quant_Populosity()
     if (data)
 		cout << "Executing Quant_Propulosity()" << endl;
 
-    
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
+    clock_t time;
+    time = clock();
     
 	int offset = width * height;
 	int arraysize = offset * 4;
@@ -465,10 +459,8 @@ bool TargaImage::Quant_Populosity()
 		data[i+2]=popularcolors[index].B;
 	}
 	
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true; 
 }// Quant_Populosity
@@ -485,8 +477,8 @@ bool TargaImage::Dither_Threshold()
     if (data)
 		cout << "Executing Dither_Threshold()" << endl;
 
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
+    clock_t time;
+    time = clock();
     
 	int offset = width * height;
 	int arraysize = offset * 4;
@@ -509,10 +501,8 @@ bool TargaImage::Dither_Threshold()
 		}
 	}
 
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true;
 }// Dither_Threshold
@@ -529,8 +519,8 @@ bool TargaImage::Dither_Random()
     if (data)
 		cout << "Executing Dither_Random()" << endl;
 
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
+    clock_t bench;
+    bench = clock();
     
 	int offset = width * height;
 	int arraysize = offset * 4;
@@ -548,7 +538,7 @@ bool TargaImage::Dither_Random()
 	cout << "Average Intensity: " << averageintensity << endl << endl;
 
 	// Seed Random
-	srand ((unsigned int) time(NULL));
+	srand ((unsigned int)time(NULL));
 
 	cout << "Applying Threshold based on Average Intensity, after adding random value betwen -0.2 and 0.2" << endl;
 	for (int i = 0; i < arraysize; i+=4)
@@ -579,10 +569,8 @@ bool TargaImage::Dither_Random()
 		}
 	}
 
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    bench = clock() - bench;
+    cout << "Time Elapsed:  " << ((float) bench)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true;
 }// Dither_Random
@@ -613,8 +601,8 @@ bool TargaImage::Dither_Bright()
     if (data)
 		cout << "Executing Dither_Bright()" << endl;
 
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
+    clock_t time;
+    time = clock();
     
 	int offset = width * height;
 	int arraysize = offset * 4;
@@ -650,10 +638,8 @@ bool TargaImage::Dither_Bright()
 		}
 	}
 
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true;
 }// Dither_Bright
@@ -853,8 +839,8 @@ bool TargaImage::Filter_Gaussian()
     if (data)
         cout << "Executing Filter_Gaussian()" << endl;
 
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
+    clock_t time;
+    time = clock();
 
     const int offset = width * height;
     const int arraysize = offset * 4;
@@ -941,10 +927,8 @@ bool TargaImage::Filter_Gaussian()
     memcpy(data, datatemp, sizeof(unsigned char) * width * height * 4);
     delete [] datatemp;
     
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
 
     return true;
 }// Filter_Gaussian
@@ -962,8 +946,8 @@ bool TargaImage::Filter_Gaussian_N( unsigned int N )
     if (data)
         cout << "Executing Filter_Gaussian_N(" << N << ")" << endl;
 
-    struct timeval timeStart,timeEnd;
-    gettimeofday(&timeStart, NULL);
+    clock_t time;
+    time = clock();
 
     const int offset = width * height;
     const int arraysize = offset * 4;
@@ -1051,10 +1035,8 @@ bool TargaImage::Filter_Gaussian_N( unsigned int N )
     memcpy(data, datatemp, sizeof(unsigned char) * width * height * 4);
     delete [] datatemp;
 
-    gettimeofday(&timeEnd, NULL);
-    float elapsed = ((timeEnd.tv_sec - timeStart.tv_sec) * 1000000 + (timeEnd.tv_usec - timeStart.tv_usec));
-    elapsed = elapsed / 1000000;
-    cout << "Time Elapsed:  " << elapsed << " sec" << endl;
+    time = clock() - time;
+    cout << "Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
     
     return true;
 }// Filter_Gaussian_N
