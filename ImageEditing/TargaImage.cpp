@@ -1121,33 +1121,34 @@ bool TargaImage::NPR_Paint()
     
     // Setup source image
     unsigned char * source;
-    source = new unsigned char[arraysize];
-    memcpy(source, data, arraysize);
+    source = new unsigned char[arraysize * sizeof(unsigned char)];
+    memcpy(source, data, arraysize * sizeof(unsigned char));
     
     // Setup reference image
     unsigned char * reference;
-    reference = new unsigned char[arraysize];
+    reference = new unsigned char[arraysize * sizeof(unsigned char)];
+	memcpy(reference, data, arraysize * sizeof(unsigned char));
     
     // Setup temporary canvas image
     unsigned char * canvas;
-    canvas = new unsigned char[arraysize];
+    canvas = new unsigned char[arraysize * sizeof(unsigned char)];
     
     vector<Stroke> setStrokes;
     
-    for (int brushsizecounter = 0; brushsizecounter < brushsize.size(); brushsizecounter++)
+    for(std::vector<int>::iterator it = brushsize.begin(); it != brushsize.end(); ++it)
     {
         //Clear Stroke
         setStrokes.clear();
         //swap out canvas
-        memcpy(canvas, data, arraysize);
+        memcpy(canvas, data, arraysize * sizeof(unsigned char));
         //swap in original
-        memcpy(data, reference, arraysize);
+        memcpy(data, reference, arraysize * sizeof(unsigned char));
         
-        Filter_Gaussian_N((2*brushsize[brushsizecounter])+1);    //Gaussian Blur
+        Filter_Gaussian_N((2*(*it))+1);    //Gaussian Blur
         
-        memcpy(reference, data, arraysize);
+        memcpy(reference, data, arraysize * sizeof(unsigned char));
         
-        memcpy(data, canvas, arraysize);
+        memcpy(data, canvas, arraysize * sizeof(unsigned char));
         
         // Setup difference matrix
         vector<float> difference;
@@ -1156,31 +1157,31 @@ bool TargaImage::NPR_Paint()
         for (int i = 0; i < arraysize; i+=4)
         {
             //At each pixel
-            int r1 = data[i];
-            int g1 = data[i+1];
-            int b1 = data[i+2];
+            int r1 = (int) data[i];
+            int g1 = (int) data[i+1];
+            int b1 = (int) data[i+2];
             
-            int r2 = reference[i];
-            int g2 = reference[i+1];
-            int b2 = reference[i+2];
-            
-            float temp = abs(((r1 - r2)^2 + (g1 - g2)^2 + (b1 - b2)^2)^(1/2));
-            difference.push_back(temp);
+            int r2 = (int) reference[i];
+            int g2 = (int) reference[i+1];
+            int b2 = (int) reference[i+2];
+            //cout << r2 <<"," <<  g2 << "," << b2 << endl;
+            float temp =  pow((float) (pow((float)r1 - r2,2.0f) + pow((float)g1 - g2,2.0f) + pow((float)b1 - b2,2.0f)), 0.5f);
+            difference.push_back(temp); 
         }
-        
+
         //Set GridSize
-        int gridsize = brushsize[brushsizecounter];
-        
-        for (int pixelcounter = 0; pixelcounter < offset; pixelcounter++)
+        int gridsize = *it;
+
+        for (int l = 0; l < difference.size(); l++)
         {
-            int count = 0;
+			int count = 0;
             float sum = 0.0f;
             float comparison  = 0.0f;
             int significant = 0;
             
             //Calculate current pixel x and y
-            int currentrow = pixelcounter / width;
-            int currentcolumn = pixelcounter % width;
+            int currentrow = l / width;
+            int currentcolumn = l % width;
             
             //Iterate through grid
             for (int j = 0; j < gridsize; j++)	//Row
@@ -1189,7 +1190,6 @@ bool TargaImage::NPR_Paint()
                 for (int k = 0; k < gridsize; k++) //Column
                 {
                     int movecolumn = (k - gridsize/2); //Pixel
-                    int index2 = ((movecolumn*4) + (moverow*(width)));  //pixel unit
                     
                     if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn > width - 1)
                         continue;
@@ -1198,21 +1198,25 @@ bool TargaImage::NPR_Paint()
                     if (currentrow + moverow <= -1|| currentrow + moverow > height)
                         continue;
 
-                    if (true)
-                    {
-                        sum = sum + difference[pixelcounter+index2];
-                        count++;
-                        if (difference[pixelcounter+index2] >= comparison)
-                        {
-                            comparison = difference[pixelcounter+index2];
-                            significant = pixelcounter+index2;
-                        }
-                    }
+					int index2 = ((movecolumn) + (moverow*(width)));  //pixel unit
+
+					sum = sum + difference[l+index2];
+					count++;
+
+					if (difference[l+index2] >= comparison)
+					{
+						comparison = difference[l+index2];
+						significant = l+index2;
+					}
+					
                 }
                 
             }
-            
-            if (sum/count > 25.0f)
+			float error = 0.0f;
+			if (count >= 1)
+				error = (float) sum/count;
+
+            if (error >= 25.0f)
             {
                 Stroke * temp = new Stroke();
                 int radius = gridsize*gridsize*4;
@@ -1223,7 +1227,7 @@ bool TargaImage::NPR_Paint()
                 int b = source[significant*4+2];
                 int a = source[significant*4+3];
                 
-                cout << r << "," << g << "," << b << "  Radius: " << radius << endl;
+                //cout << r << "," << g << "," << b << "  Radius: " << radius << endl;
                 
                 temp->radius = radius;
                 temp->x = x;
@@ -1235,13 +1239,13 @@ bool TargaImage::NPR_Paint()
                 
                 setStrokes.push_back(*temp);
             }
-
         }
         
         //Splash on data
         //cout << "I have " << setStrokes.size() << " strokes" << endl;
-        for(vector<Stroke>::size_type i = 0; i != setStrokes.size(); i++) {
-            Paint_Stroke(setStrokes[i]);
+        for(vector<Stroke>::iterator str = setStrokes.begin(); str != setStrokes.end(); ++str) 
+        {
+			Paint_Stroke(*str);
         }
 
     }
