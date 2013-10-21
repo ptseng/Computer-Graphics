@@ -1134,16 +1134,16 @@ bool TargaImage::NPR_Paint()
     
     vector<Stroke> setStrokes;
     
-    for (int i = 0; i < brushsize.size(); ++i)
+    for (int brushsizecounter = 0; brushsizecounter < brushsize.size(); brushsizecounter++)
     {
-        //Clear Strokes
+        //Clear Stroke
         setStrokes.clear();
         //swap out canvas
         memcpy(canvas, data, arraysize);
         //swap in original
         memcpy(data, reference, arraysize);
         
-        Filter_Gaussian_N((2*brushsize[i])+1);    //Gaussian Blur
+        Filter_Gaussian_N((2*brushsize[brushsizecounter])+1);    //Gaussian Blur
         
         memcpy(reference, data, arraysize);
         
@@ -1169,9 +1169,9 @@ bool TargaImage::NPR_Paint()
         }
         
         //Set GridSize
-        int gridsize = brushsize[i];
+        int gridsize = brushsize[brushsizecounter];
         
-        for (int i = 0; i < offset; i++)
+        for (int pixelcounter = 0; pixelcounter < offset; pixelcounter++)
         {
             int count = 0;
             float sum = 0.0f;
@@ -1179,8 +1179,8 @@ bool TargaImage::NPR_Paint()
             int significant = 0;
             
             //Calculate current pixel x and y
-            int currentrow = i / width;
-            int currentcolumn = i % width;
+            int currentrow = pixelcounter / width;
+            int currentcolumn = pixelcounter % width;
             
             //Iterate through grid
             for (int j = 0; j < gridsize; j++)	//Row
@@ -1197,15 +1197,15 @@ bool TargaImage::NPR_Paint()
                     
                     if (currentrow + moverow <= -1|| currentrow + moverow > height)
                         continue;
-                    
+
                     if (true)
                     {
-                        sum = sum + difference[i+index2];
+                        sum = sum + difference[pixelcounter+index2];
                         count++;
-                        if (difference[i+index2] >= comparison)
+                        if (difference[pixelcounter+index2] >= comparison)
                         {
-                            comparison = difference[i+index2];
-                            significant = i+index2;
+                            comparison = difference[pixelcounter+index2];
+                            significant = pixelcounter+index2;
                         }
                     }
                 }
