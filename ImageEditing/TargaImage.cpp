@@ -1150,7 +1150,7 @@ bool TargaImage::NPR_Paint()
         memcpy(data, canvas, arraysize);
         
         // Setup difference matrix
-        float difference [offset];
+        vector<float> difference;
         
         //Difference
         for (int i = 0; i < arraysize; i+=4)
@@ -1164,7 +1164,8 @@ bool TargaImage::NPR_Paint()
             int g2 = reference[i+1];
             int b2 = reference[i+2];
             
-            difference[i/4] = abs(((r1 - r2)^2 + (g1 - g2)^2 + (b1 - b2)^2)^(1/2));
+            float temp = abs(((r1 - r2)^2 + (g1 - g2)^2 + (b1 - b2)^2)^(1/2));
+            difference.push_back(temp);
         }
         
         //Set GridSize
@@ -1197,7 +1198,7 @@ bool TargaImage::NPR_Paint()
                     if (currentrow + moverow <= -1|| currentrow + moverow > height)
                         continue;
                     
-                    if (!isnan(difference[i+index2]))
+                    if (true)
                     {
                         sum = sum + difference[i+index2];
                         count++;
@@ -1242,6 +1243,7 @@ bool TargaImage::NPR_Paint()
         for(vector<Stroke>::size_type i = 0; i != setStrokes.size(); i++) {
             Paint_Stroke(setStrokes[i]);
         }
+
     }
     
     //Cleanup
