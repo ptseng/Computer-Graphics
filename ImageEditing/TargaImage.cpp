@@ -1111,7 +1111,11 @@ bool TargaImage::NPR_Paint()
     clock_t time;
     time = clock();
     
-    vector<int> brushsize = {7,3,1};
+    vector<int> brushsize;
+    brushsize.push_back(7);
+    brushsize.push_back(3);
+    brushsize.push_back(1);
+    
     const int offset = width * height;
     const int arraysize = offset * 4;
     
