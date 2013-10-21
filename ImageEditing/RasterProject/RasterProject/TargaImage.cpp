@@ -1104,8 +1104,151 @@ bool TargaImage::Filter_Enhance()
 ///////////////////////////////////////////////////////////////////////////////
 bool TargaImage::NPR_Paint()
 {
-    ClearToBlack();
-    return false;
+    // Print diagnostic message
+    if (data)
+        cout << "Executing NPR_Paint()" << endl;
+    
+    clock_t time;
+    time = clock();
+    
+    vector<int> brushsize = {7,3,1};
+    const int offset = width * height;
+    const int arraysize = offset * 4;
+    
+    // Setup source image
+    unsigned char * source;
+    source = new unsigned char[arraysize];
+    memcpy(source, data, arraysize);
+    
+    // Setup reference image
+    unsigned char * reference;
+    reference = new unsigned char[arraysize];
+    
+    // Setup temporary canvas image
+    unsigned char * canvas;
+    canvas = new unsigned char[arraysize];
+    
+    vector<Stroke> setStrokes;
+    
+    for (int i = 0; i < brushsize.size(); ++i)
+    {
+        //Clear Strokes
+        setStrokes.clear();
+        //swap out canvas
+        memcpy(canvas, data, arraysize);
+        //swap in original
+        memcpy(data, reference, arraysize);
+        
+        Filter_Gaussian_N((2*brushsize[i])+1);    //Gaussian Blur
+        
+        memcpy(reference, data, arraysize);
+        
+        memcpy(data, canvas, arraysize);
+        
+        // Setup difference matrix
+        float difference [offset];
+        
+        //Difference
+        for (int i = 0; i < arraysize; i+=4)
+        {
+            //At each pixel
+            int r1 = data[i];
+            int g1 = data[i+1];
+            int b1 = data[i+2];
+            
+            int r2 = reference[i];
+            int g2 = reference[i+1];
+            int b2 = reference[i+2];
+            
+            difference[i/4] = abs(((r1 - r2)^2 + (g1 - g2)^2 + (b1 - b2)^2)^(1/2));
+        }
+        
+        //Set GridSize
+        int gridsize = brushsize[i];
+        
+        for (int i = 0; i < offset; i++)
+        {
+            int count = 0;
+            float sum = 0.0f;
+            float comparison  = 0.0f;
+            int significant = 0;
+            
+            //Calculate current pixel x and y
+            int currentrow = i / width;
+            int currentcolumn = i % width;
+            
+            //Iterate through grid
+            for (int j = 0; j < gridsize; j++)	//Row
+            {
+                int moverow = (j - gridsize/2); //Pixel
+                for (int k = 0; k < gridsize; k++) //Column
+                {
+                    int movecolumn = (k - gridsize/2); //Pixel
+                    int index2 = ((movecolumn*4) + (moverow*(width)));  //pixel unit
+                    
+                    if (currentcolumn + movecolumn <= -1 || currentcolumn + movecolumn > width - 1)
+                        continue;
+                    
+                    
+                    if (currentrow + moverow <= -1|| currentrow + moverow > height)
+                        continue;
+                    
+                    if (!isnan(difference[i+index2]))
+                    {
+                        sum = sum + difference[i+index2];
+                        count++;
+                        if (difference[i+index2] >= comparison)
+                        {
+                            comparison = difference[i+index2];
+                            significant = i+index2;
+                        }
+                    }
+                }
+                
+            }
+            
+            if (sum/count > 25.0f)
+            {
+                Stroke * temp = new Stroke();
+                int radius = gridsize*gridsize*4;
+                int x = significant%width;
+                int y = significant/width;
+                int r = source[significant*4];
+                int g = source[significant*4+1];
+                int b = source[significant*4+2];
+                int a = source[significant*4+3];
+                
+                cout << r << "," << g << "," << b << "  Radius: " << radius << endl;
+                
+                temp->radius = radius;
+                temp->x = x;
+                temp->y = y;
+                temp->r = r;
+                temp->g = g;
+                temp->b = b;
+                temp->a = a;
+                
+                setStrokes.push_back(*temp);
+            }
+
+        }
+        
+        //Splash on data
+        //cout << "I have " << setStrokes.size() << " strokes" << endl;
+        for(vector<Stroke>::size_type i = 0; i != setStrokes.size(); i++) {
+            Paint_Stroke(setStrokes[i]);
+        }
+    }
+    
+    //Cleanup
+    delete [] source;
+    delete [] reference;
+    delete [] canvas;
+    
+    time = clock() - time;
+    cout << endl << "NPR-Paint Time Elapsed:  " << ((float) time)/CLOCKS_PER_SEC << " sec" << endl;
+    
+    return true;
 }
 
 
@@ -1243,6 +1386,15 @@ void TargaImage::ClearToBlack()
     memset(data, 0, width * height * 4);
 }// ClearToBlack
 
+
+// Helper function for paint layer
+void TargaImage::paintlayer(unsigned char *& canvas, unsigned char *& reference, int radius)
+{
+    vector<Stroke> setStrokes;
+    setStrokes.clear();
+    
+    
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //      Helper function for the painterly filter; paint a stroke at

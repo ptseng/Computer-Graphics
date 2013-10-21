@@ -89,7 +89,10 @@ class TargaImage
 
 	// clear image to all black
         void ClearToBlack();
-
+    
+    // Painterly Helper Function for Painting Layers
+        void paintlayer(unsigned char *& canvas, unsigned char *& reference, int radius);
+    
 	// Draws a filled circle according to the stroke data
         void Paint_Stroke(const Stroke& s);
 

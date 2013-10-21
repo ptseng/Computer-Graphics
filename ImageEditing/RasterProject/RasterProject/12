@@ -1,0 +1,3 @@
+load church.tga
+npr-paint
+save 12.tga
