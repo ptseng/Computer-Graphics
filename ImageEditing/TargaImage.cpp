@@ -1134,15 +1134,14 @@ bool TargaImage::NPR_Paint()
     canvas = new unsigned char[arraysize * sizeof(unsigned char)];
     
     vector<Stroke> setStrokes;
+    ClearToBlack();
     
     for(std::vector<int>::iterator it = brushsize.begin(); it != brushsize.end(); ++it)
     {
-        //Clear Stroke
-        setStrokes.clear();
         //swap out canvas
         memcpy(canvas, data, arraysize * sizeof(unsigned char));
         //swap in original
-        memcpy(data, reference, arraysize * sizeof(unsigned char));
+        memcpy(data, source, arraysize * sizeof(unsigned char));
         
         Filter_Gaussian_N((2*(*it))+1);    //Gaussian Blur
         
@@ -1219,13 +1218,13 @@ bool TargaImage::NPR_Paint()
             if (error >= 25.0f)
             {
                 Stroke * temp = new Stroke();
-                int radius = gridsize*gridsize*4;
+                int radius = gridsize*2+1;
                 int x = significant%width;
                 int y = significant/width;
-                int r = source[significant*4];
-                int g = source[significant*4+1];
-                int b = source[significant*4+2];
-                int a = source[significant*4+3];
+                int r = reference[significant*4];
+                int g = reference[significant*4+1];
+                int b = reference[significant*4+2];
+                int a = reference[significant*4+3];
                 
                 //cout << r << "," << g << "," << b << "  Radius: " << radius << endl;
                 
@@ -1247,6 +1246,9 @@ bool TargaImage::NPR_Paint()
         {
 			Paint_Stroke(*str);
         }
+        
+        //Clear Stroke
+        setStrokes.clear();
 
     }
     

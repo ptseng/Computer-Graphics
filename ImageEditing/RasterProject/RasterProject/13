@@ -1,0 +1,3 @@
+load wiz.tga
+npr-paint
+save 13.tga
