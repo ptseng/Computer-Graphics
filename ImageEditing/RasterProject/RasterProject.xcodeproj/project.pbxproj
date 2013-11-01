@@ -221,7 +221,7 @@
 				CONFIGURATION_BUILD_DIR = Rasterproject/;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				OTHER_LDFLAGS = (
-					"-L/usr/local/Cellar/fltk/1.3.2/lib",
+					"-L/Users/ptseng/Developer/fltk/lib",
 					"-lfltk",
 					"-lpthread",
 					"-framework",
@@ -229,7 +229,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYMROOT = build;
-				USER_HEADER_SEARCH_PATHS = /usr/local/Cellar/fltk/1.3.2/include;
+				USER_HEADER_SEARCH_PATHS = /Users/ptseng/Developer/fltk/include;
 			};
 			name = Debug;
 		};
@@ -239,14 +239,14 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				OTHER_LDFLAGS = (
-					"-L/usr/local/Cellar/fltk/1.3.2/lib",
+					"-L/Users/ptseng/Developer/fltk/lib",
 					"-lfltk",
 					"-lpthread",
 					"-framework",
 					Cocoa,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = /usr/local/Cellar/fltk/1.3.2/include;
+				USER_HEADER_SEARCH_PATHS = /Users/ptseng/Developer/fltk/include;
 			};
 			name = Release;
 		};
@@ -269,6 +269,7 @@
 				FB1055F5181355BA00B169B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

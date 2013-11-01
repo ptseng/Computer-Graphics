@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C06EE46F-E8F9-4E2E-96D6-86494F41805D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>GLFullScreen</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>66FEFDE2-9D7B-4F6D-AED2-342EF74C54F8</key>
+		<string>https://github.com/ptseng/VisualStudio.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>GLFullScreen/GLFullScreen.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>66FEFDE2-9D7B-4F6D-AED2-342EF74C54F8</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ptseng/VisualStudio.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>66FEFDE2-9D7B-4F6D-AED2-342EF74C54F8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>66FEFDE2-9D7B-4F6D-AED2-342EF74C54F8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VisualStudio</string>
+		</dict>
+	</array>
+</dict>
+</plist>
