@@ -10,11 +10,9 @@
 #include <stdio.h>
 #include <FL/x.H>
 
-
 // The time per frame, in seconds (enforced only by timeouts.)
-const float  FRAME_TIME = 0.025f;
-
-WorldWindow  *world_window = NULL; // The window with world view in it
+const float  FRAME_TIME = 0.010f;
+WorldWindow  * world_window = NULL; // The window with world view in it
 
 
 // This callback is called every 40th of a second if the system is fast
@@ -33,18 +31,16 @@ Timeout_Callback(void *data)
 }
 
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     world_window = new WorldWindow(0, 0, 1154, 700, "Amusement Park");
    
-    //Fl::visual(FL_RGB8);
-    Fl::visual(FL_RGB);
+    Fl::visual(FL_RGB8|FL_DOUBLE|FL_DEPTH|FL_STENCIL);
     
     world_window->end();
     world_window->show(argc, argv);
 
-    Fl::add_timeout(0.5, Timeout_Callback, NULL);
+    Fl::add_timeout(0.1, Timeout_Callback, NULL);
 
     Fl::flush();
     Fl::check();

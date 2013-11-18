@@ -47,10 +47,8 @@
 */
 
 #include <stdio.h>
-
+#include <stdlib.h>
 #include "libtarga.h"
-
-
 
 
 #define TGA_IMG_NODATA             (0)

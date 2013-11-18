@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB37FEA61833FC03008FCE18 /* Tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB37FEA51833FC03008FCE18 /* Tree.cpp */; };
+		FB3ABDEF183844DD00D3A9BB /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB3ABDED183844DD00D3A9BB /* Sphere.cpp */; };
+		FB3ABE111838683500D3A9BB /* SubdSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB3ABE0F1838683500D3A9BB /* SubdSphere.cpp */; };
+		FB9365821836D38F004C62EE /* TeaPot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9365801836D38E004C62EE /* TeaPot.cpp */; };
+		FB9365871836F1C2004C62EE /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9365851836F1C2004C62EE /* Road.cpp */; };
 		FBA9AE14181CB19C005761BD /* AmusementPark.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = FBA9AE13181CB19C005761BD /* AmusementPark.1 */; };
 		FBA9AE28181CB20B005761BD /* libtarga.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA9AE1B181CB20B005761BD /* libtarga.c */; };
 		FBA9AE29181CB20B005761BD /* CubicBspline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBA9AE1C181CB20B005761BD /* CubicBspline.cpp */; };
@@ -15,6 +20,7 @@
 		FBA9AE2C181CB20B005761BD /* Track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBA9AE23181CB20B005761BD /* Track.cpp */; };
 		FBA9AE2D181CB20B005761BD /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBA9AE25181CB20B005761BD /* World.cpp */; };
 		FBA9AE2E181CB20B005761BD /* WorldWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBA9AE26181CB20B005761BD /* WorldWindow.cpp */; };
+		FBCAA4221839809500F322E6 /* Statute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBCAA4201839809500F322E6 /* Statute.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +38,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FB37FEA31832B24B008FCE18 /* grasshd.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = grasshd.tga; sourceTree = "<group>"; };
+		FB37FEA41833FBF0008FCE18 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		FB37FEA51833FC03008FCE18 /* Tree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tree.cpp; sourceTree = "<group>"; };
+		FB3ABDED183844DD00D3A9BB /* Sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sphere.cpp; sourceTree = "<group>"; };
+		FB3ABDEE183844DD00D3A9BB /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
+		FB3ABDF3183856F400D3A9BB /* road.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = road.tga; sourceTree = "<group>"; };
+		FB3ABDF4183856F400D3A9BB /* sun.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = sun.tga; sourceTree = "<group>"; };
+		FB3ABDF5183856F400D3A9BB /* walk.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = walk.tga; sourceTree = "<group>"; };
+		FB3ABE0F1838683500D3A9BB /* SubdSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SubdSphere.cpp; sourceTree = "<group>"; };
+		FB3ABE101838683500D3A9BB /* SubdSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubdSphere.h; sourceTree = "<group>"; };
+		FB9365801836D38E004C62EE /* TeaPot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TeaPot.cpp; sourceTree = "<group>"; };
+		FB9365811836D38F004C62EE /* TeaPot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeaPot.h; sourceTree = "<group>"; };
+		FB9365851836F1C2004C62EE /* Road.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Road.cpp; sourceTree = "<group>"; };
+		FB9365861836F1C2004C62EE /* Road.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Road.h; sourceTree = "<group>"; };
 		FBA9AE0E181CB19C005761BD /* AmusementPark */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AmusementPark; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA9AE13181CB19C005761BD /* AmusementPark.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AmusementPark.1; sourceTree = "<group>"; };
 		FBA9AE1A181CB20B005761BD /* libtarga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libtarga.h; sourceTree = "<group>"; };
@@ -48,6 +68,9 @@
 		FBA9AE25181CB20B005761BD /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
 		FBA9AE26181CB20B005761BD /* WorldWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldWindow.cpp; sourceTree = "<group>"; };
 		FBA9AE27181CB20B005761BD /* WorldWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldWindow.h; sourceTree = "<group>"; };
+		FBCAA4201839809500F322E6 /* Statute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Statute.cpp; sourceTree = "<group>"; };
+		FBCAA4211839809500F322E6 /* Statute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statute.h; sourceTree = "<group>"; };
+		FBCAA4231839828A00F322E6 /* Geometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +84,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB3ABDF01838568E00D3A9BB /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				FB3ABE0F1838683500D3A9BB /* SubdSphere.cpp */,
+				FB3ABE101838683500D3A9BB /* SubdSphere.h */,
+				FBA9AE21181CB20B005761BD /* Ground.cpp */,
+				FBA9AE22181CB20B005761BD /* Ground.h */,
+				FBA9AE23181CB20B005761BD /* Track.cpp */,
+				FBA9AE24181CB20B005761BD /* Track.h */,
+				FB37FEA41833FBF0008FCE18 /* Tree.h */,
+				FB37FEA51833FC03008FCE18 /* Tree.cpp */,
+				FB9365801836D38E004C62EE /* TeaPot.cpp */,
+				FB9365811836D38F004C62EE /* TeaPot.h */,
+				FB9365851836F1C2004C62EE /* Road.cpp */,
+				FB9365861836F1C2004C62EE /* Road.h */,
+				FB3ABDED183844DD00D3A9BB /* Sphere.cpp */,
+				FB3ABDEE183844DD00D3A9BB /* Sphere.h */,
+				FBCAA4201839809500F322E6 /* Statute.cpp */,
+				FBCAA4211839809500F322E6 /* Statute.h */,
+				FBCAA4231839828A00F322E6 /* Geometry.h */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		FB3ABDF1183856AF00D3A9BB /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				FBA9AE1A181CB20B005761BD /* libtarga.h */,
+				FBA9AE1B181CB20B005761BD /* libtarga.c */,
+				FBA9AE1C181CB20B005761BD /* CubicBspline.cpp */,
+				FBA9AE1D181CB20B005761BD /* CubicBspline.h */,
+				FBA9AE1E181CB20B005761BD /* GenericException.cpp */,
+				FBA9AE1F181CB20B005761BD /* GenericException.h */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		FB3ABDF2183856C700D3A9BB /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				FB3ABDF3183856F400D3A9BB /* road.tga */,
+				FB3ABDF4183856F400D3A9BB /* sun.tga */,
+				FB3ABDF5183856F400D3A9BB /* walk.tga */,
+				FB37FEA31832B24B008FCE18 /* grasshd.tga */,
+				FBA9AE20181CB20B005761BD /* grass.tga */,
+			);
+			name = Textures;
+			sourceTree = "<group>";
+		};
 		FBA9AE05181CB19C005761BD = {
 			isa = PBXGroup;
 			children = (
@@ -80,17 +152,9 @@
 		FBA9AE10181CB19C005761BD /* AmusementPark */ = {
 			isa = PBXGroup;
 			children = (
-				FBA9AE1A181CB20B005761BD /* libtarga.h */,
-				FBA9AE1B181CB20B005761BD /* libtarga.c */,
-				FBA9AE1C181CB20B005761BD /* CubicBspline.cpp */,
-				FBA9AE1D181CB20B005761BD /* CubicBspline.h */,
-				FBA9AE1E181CB20B005761BD /* GenericException.cpp */,
-				FBA9AE1F181CB20B005761BD /* GenericException.h */,
-				FBA9AE20181CB20B005761BD /* grass.tga */,
-				FBA9AE21181CB20B005761BD /* Ground.cpp */,
-				FBA9AE22181CB20B005761BD /* Ground.h */,
-				FBA9AE23181CB20B005761BD /* Track.cpp */,
-				FBA9AE24181CB20B005761BD /* Track.h */,
+				FB3ABDF2183856C700D3A9BB /* Textures */,
+				FB3ABDF1183856AF00D3A9BB /* Library */,
+				FB3ABDF01838568E00D3A9BB /* Objects */,
 				FBA9AE25181CB20B005761BD /* World.cpp */,
 				FBA9AE26181CB20B005761BD /* WorldWindow.cpp */,
 				FBA9AE27181CB20B005761BD /* WorldWindow.h */,
@@ -151,12 +215,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBA9AE29181CB20B005761BD /* CubicBspline.cpp in Sources */,
+				FB37FEA61833FC03008FCE18 /* Tree.cpp in Sources */,
 				FBA9AE2E181CB20B005761BD /* WorldWindow.cpp in Sources */,
 				FBA9AE28181CB20B005761BD /* libtarga.c in Sources */,
 				FBA9AE2D181CB20B005761BD /* World.cpp in Sources */,
+				FB9365821836D38F004C62EE /* TeaPot.cpp in Sources */,
 				FBA9AE2C181CB20B005761BD /* Track.cpp in Sources */,
+				FBCAA4221839809500F322E6 /* Statute.cpp in Sources */,
+				FB3ABDEF183844DD00D3A9BB /* Sphere.cpp in Sources */,
+				FB3ABE111838683500D3A9BB /* SubdSphere.cpp in Sources */,
 				FBA9AE2B181CB20B005761BD /* Ground.cpp in Sources */,
 				FBA9AE2A181CB20B005761BD /* GenericException.cpp in Sources */,
+				FB9365871836F1C2004C62EE /* Road.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,19 +306,30 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ANALYZER_MEMORY_MANAGEMENT = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
+				GCC_CW_ASM_SYNTAX = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_STRICT_ALIASING = NO;
-				GCC_THREADSAFE_STATICS = YES;
-				GENERATE_MASTER_OBJECT_FILE = NO;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = "fltk_gl-Info.plist";
 				INFOPLIST_PREPROCESS = YES;
-				KEEP_PRIVATE_EXTERNS = NO;
+				KEEP_PRIVATE_EXTERNS = YES;
+				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = "";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				LLVM_LTO = NO;
+				LLVM_VECTORIZE_LOOPS = NO;
 				MACH_O_TYPE = mh_execute;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -278,18 +359,29 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ANALYZER_MEMORY_MANAGEMENT = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
+				GCC_CW_ASM_SYNTAX = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_STRICT_ALIASING = NO;
-				GCC_THREADSAFE_STATICS = YES;
-				GENERATE_MASTER_OBJECT_FILE = NO;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = "fltk_gl-Info.plist";
 				INFOPLIST_PREPROCESS = YES;
-				KEEP_PRIVATE_EXTERNS = NO;
+				KEEP_PRIVATE_EXTERNS = YES;
+				LD_NO_PIE = NO;
 				LIBRARY_SEARCH_PATHS = "";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				LLVM_LTO = NO;
+				LLVM_VECTORIZE_LOOPS = NO;
 				MACH_O_TYPE = mh_execute;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = (

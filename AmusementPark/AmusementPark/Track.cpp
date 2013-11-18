@@ -5,19 +5,21 @@
  */
 
 
+#include <iostream>
 #include "Track.h"
 #include <stdio.h>
 #include <FL/math.h>
+#include <OPENGL/glu.h>
 
 
 // The control points for the track spline.
 const int   Track::TRACK_NUM_CONTROLS = 4;
 const float Track::TRACK_CONTROLS[TRACK_NUM_CONTROLS][3] =
-		{ { -20.0, -20.0, -18.0 }, { 20.0, -20.0, 40.0 },
-		  { 20.0, 20.0, -18.0 }, { -20.0, 20.0, 40.0 } };
+		{ { -20.0, -20.0, -20.0 }, { 20.0, -20.0, 40.0 },
+		  { 20.0, 20.0, -20.0 }, { -20.0, 20.0, 40.0 } };
 
 // The carriage energy and mass
-const float Track::TRAIN_ENERGY = 250.0f;
+const float Track::TRAIN_ENERGY = 249.0f;
 
 
 // Normalize a 3d vector.
@@ -47,8 +49,7 @@ Track::~Track(void)
 
 
 // Initializer. Would return false if anything could go wrong.
-bool
-Track::Initialize(void)
+bool Track::Initialize(float x, float y, float z)
 {
     CubicBspline    refined(3, true);
     int		    n_refined;
@@ -71,7 +72,9 @@ Track::Initialize(void)
     // subdivision has made sure that these are good enough.
     track_list = glGenLists(1);
     glNewList(track_list, GL_COMPILE);
+    glTranslatef(x, y, z);
 	glColor3f(1.0f, 1.0, 1.0f);
+    
 	glBegin(GL_LINE_STRIP);
 	    for ( i = 0 ; i <= n_refined ; i++ )
 	    {
@@ -133,15 +136,14 @@ Track::Initialize(void)
 
 
 // Draw
-void
-Track::Draw(void)
+GLfloat * Track::Draw(void)
 {
     float   posn[3];
     float   tangent[3];
     double  angle;
 
     if ( ! initialized )
-	return;
+        return NULL;
 
     glPushMatrix();
 
@@ -152,27 +154,34 @@ Track::Draw(void)
 
     // Figure out where the train is
     track->Evaluate_Point(posn_on_track, posn);
-
+    
     // Translate the train to the point
     glTranslatef(posn[0], posn[1], posn[2]);
 
     // ...and what it's orientation is
     track->Evaluate_Derivative(posn_on_track, tangent);
     Normalize_3(tangent);
-
+    
     // Rotate it to poitn along the track, but stay horizontal
     angle = atan2(tangent[1], tangent[0]) * 180.0 / M_PI;
     glRotatef((float)angle, 0.0f, 0.0f, 1.0f);
 
     // Another rotation to get the tilt right.
     angle = asin(-tangent[2]) * 180.0 / M_PI;
+    
+    //std::cout << angle << std::endl;
+    
     glRotatef((float)angle, 0.0f, 1.0f, 0.0f);
-
+    
+    glGetFloatv(GL_MODELVIEW_MATRIX, ride_matrix);
+    
     // Draw the train
     glCallList(train_list);
 
     glPopMatrix();
     glPopMatrix();
+    
+    return ride_matrix;
 }
 
 

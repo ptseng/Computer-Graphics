@@ -4,7 +4,7 @@
  * (c) 2001-2002: Stephen Chenney, University of Wisconsin at Madison.
  */
 
-
+#include <iostream>
 #include "Ground.h"
 #include "libtarga.h"
 #include <stdio.h>
@@ -32,13 +32,13 @@ Ground::Initialize(void)
 
     // Load the image for the texture. The texture file has to be in
     // a place where it will be found.
-    if ( ! ( image_data = (ubyte*)tga_load("grass.tga", &image_width,
+    if ( ! ( image_data = (ubyte*)tga_load("grasshd.tga", &image_width,
 					   &image_height, TGA_TRUECOLOR_24) ) )
     {
 	fprintf(stderr, "Ground::Initialize: Couldn't load grass.tga\n");
 	return false;
     }
-
+    
     // This creates a texture object and binds it, so the next few operations
     // apply to this texture.
     glGenTextures(1, &texture_obj);
@@ -47,22 +47,29 @@ Ground::Initialize(void)
     // This sets a parameter for how the texture is loaded and interpreted.
     // basically, it says that the data is packed tightly in the image array.
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
+    
     // This sets up the texture with high quality filtering. First it builds
     // mipmaps from the image data, then it sets the filtering parameters
     // and the wrapping parameters. We want the grass to be repeated over the
     // ground.
-    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, 
-		      GL_RGB, GL_UNSIGNED_BYTE, image_data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, GL_RGB, GL_UNSIGNED_BYTE, image_data);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		    GL_NEAREST_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+    
+    float maximumAnistropy;
+    //get the value
+    glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maximumAnistropy);
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maximumAnistropy);
+    
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 
     // This says what to do with the texture. Modulate will multiply the
     // texture by the underlying color.
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); 
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
     // Now do the geometry. Create the display list.
     display_list = glGenLists(1);
@@ -79,13 +86,20 @@ Ground::Initialize(void)
 
 	// Draw the ground as a quadrilateral, specifying texture coordinates.
 	glBegin(GL_QUADS);
-	    glTexCoord2f(100.0, 100.0);
-	    glVertex3f(50.0, 50.0, 0.0);
-	    glTexCoord2f(-100.0, 100.0);
-	    glVertex3f(-50.0, 50.0, 0.0);
-	    glTexCoord2f(-100.0, -100.0);
+	    //glTexCoord2f(100.0, 100.0);
+        glTexCoord2f(16.0f, 16.0f);
+        glVertex3f(50.0, 50.0, 0.0);
+	   
+        //glTexCoord2f(-100.0, 100.0);
+        glTexCoord2f(-16.0f, 16.0f);
+        glVertex3f(-50.0, 50.0, 0.0);
+    
+	    //glTexCoord2f(-100.0, -100.0);
+        glTexCoord2f(-16.0f, -16.0f);
 	    glVertex3f(-50.0, -50.0, 0.0);
-	    glTexCoord2f(100.0, -100.0);
+    
+	    //glTexCoord2f(100.0, -100.0);
+        glTexCoord2f(16.0f, -16.0f);
 	    glVertex3f(50.0, -50.0, 0.0);
 	glEnd();
 
