@@ -10,6 +10,7 @@
 		FB37FEA61833FC03008FCE18 /* Tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB37FEA51833FC03008FCE18 /* Tree.cpp */; };
 		FB3ABDEF183844DD00D3A9BB /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB3ABDED183844DD00D3A9BB /* Sphere.cpp */; };
 		FB3ABE111838683500D3A9BB /* SubdSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB3ABE0F1838683500D3A9BB /* SubdSphere.cpp */; };
+		FB4C642D184BEF8C00487D65 /* Ferris.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB4C642B184BEF8C00487D65 /* Ferris.cpp */; };
 		FB9365821836D38F004C62EE /* TeaPot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9365801836D38E004C62EE /* TeaPot.cpp */; };
 		FB9365871836F1C2004C62EE /* Road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9365851836F1C2004C62EE /* Road.cpp */; };
 		FBA9AE14181CB19C005761BD /* AmusementPark.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = FBA9AE13181CB19C005761BD /* AmusementPark.1 */; };
@@ -48,6 +49,8 @@
 		FB3ABDF5183856F400D3A9BB /* walk.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = walk.tga; sourceTree = "<group>"; };
 		FB3ABE0F1838683500D3A9BB /* SubdSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SubdSphere.cpp; sourceTree = "<group>"; };
 		FB3ABE101838683500D3A9BB /* SubdSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubdSphere.h; sourceTree = "<group>"; };
+		FB4C642B184BEF8C00487D65 /* Ferris.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ferris.cpp; sourceTree = "<group>"; };
+		FB4C642C184BEF8C00487D65 /* Ferris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ferris.h; sourceTree = "<group>"; };
 		FB9365801836D38E004C62EE /* TeaPot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TeaPot.cpp; sourceTree = "<group>"; };
 		FB9365811836D38F004C62EE /* TeaPot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeaPot.h; sourceTree = "<group>"; };
 		FB9365851836F1C2004C62EE /* Road.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Road.cpp; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 				FBCAA4201839809500F322E6 /* Statute.cpp */,
 				FBCAA4211839809500F322E6 /* Statute.h */,
 				FBCAA4231839828A00F322E6 /* Geometry.h */,
+				FB4C642B184BEF8C00487D65 /* Ferris.cpp */,
+				FB4C642C184BEF8C00487D65 /* Ferris.h */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 				FBA9AE28181CB20B005761BD /* libtarga.c in Sources */,
 				FBA9AE2D181CB20B005761BD /* World.cpp in Sources */,
 				FB9365821836D38F004C62EE /* TeaPot.cpp in Sources */,
+				FB4C642D184BEF8C00487D65 /* Ferris.cpp in Sources */,
 				FBA9AE2C181CB20B005761BD /* Track.cpp in Sources */,
 				FBCAA4221839809500F322E6 /* Statute.cpp in Sources */,
 				FB3ABDEF183844DD00D3A9BB /* Sphere.cpp in Sources */,
@@ -316,7 +322,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_STRICT_ALIASING = NO;
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_UNROLL_LOOPS = NO;
@@ -368,7 +374,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_STRICT_ALIASING = NO;
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_UNROLL_LOOPS = NO;

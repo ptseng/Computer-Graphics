@@ -152,16 +152,27 @@ void WorldWindow::draw(void)
         
         ground.Initialize();
         traintrack.Initialize(0,0,0);
-        tree1.Initialize(50.0f, 50.0f, 0, "tree.tga");
-        tree2.Initialize(-50.0f, 50.0f, 0, "tree.tga");
-        tree3.Initialize(50.0f, -50.0f, 0, "tree.tga");
-        tree4.Initialize(-50.0f, -50.0f, 0, "tree.tga");
+        
+        // Corner Trees
+        tree1.Initialize(50.0f, 50.0f, 0, "tree.tga", 0.5f);
+        tree2.Initialize(-50.0f, 50.0f, 0, "tree.tga", 1.1f);
+        tree3.Initialize(50.0f, -50.0f, 0, "tree.tga", 1.5f);
+        tree4.Initialize(-50.0f, -50.0f, 0, "tree.tga", 1.9f);
+        
+        // Forest
+        tree5.Initialize(0, 25.0f, 0, "tree.tga", 0.2f);
+        tree6.Initialize(0, 27.0f, 0, "tree.tga", 0.5f);
+        tree7.Initialize(3.0f, 23.0f, 0, "tree.tga", 0.7f);
+        tree8.Initialize(1.5f, 23.0f, 0, "tree.tga", 0.9f);
+        tree9.Initialize(-3.0f, 25.0f, 0, "tree.tga", 1.1f);
         
         tp1.Initialize(0, 0, 0);
         rd1.Initialize(90,40,0,0,100,8, "road.tga");
         wk1.Initialize(0, -4, -20, 0, 80, 4, "walk.tga");
         wk2.Initialize(90, -35, 0, 0.01f, 80, 4, "walk.tga");
         sun.Initialize(5, eye[0]*0.50f, eye[1]*0.50f, eye[2]*0.50f, 0, 255, 255, "sun.tga");
+        
+        frs.Initialize(0, 0, 0);
         
     }
     
@@ -185,7 +196,6 @@ void WorldWindow::draw(void)
     
     if (trackcam)
     {
-        std::cout << traintrack.posn_on_track << std::endl;
         if (traintrack.posn_on_track-0.15f < 0)
         {
             traintrack.track->Evaluate_Point(traintrack.posn_on_track+3.85f, trackposition);
@@ -239,12 +249,20 @@ void WorldWindow::draw(void)
     tree3.Draw();
     tree4.Draw();
     
+    tree5.Draw();
+    tree6.Draw();
+    tree7.Draw();
+    tree8.Draw();
+    tree9.Draw();
+    
     tp1.Draw();
     rd1.Draw();
     wk1.Draw();
     wk2.Draw();
     
     sun.Draw();
+    
+    frs.Draw();
     
     HandleGLError();
 }
@@ -308,6 +326,7 @@ WorldWindow::Update(float dt)
     // Animate the train.
     traintrack.Update(dt);
     tp1.Update(dt);
+    frs.Update(dt);
     
     return true;
 }

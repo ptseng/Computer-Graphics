@@ -20,6 +20,7 @@
 #include "TeaPot.h"
 #include "Road.h"
 #include "Sphere.h"
+#include "Ferris.h"
 
 // Subclass the Fl_Gl_Window because we want to draw OpenGL in here.
 class WorldWindow : public Fl_Gl_Window {
@@ -53,6 +54,13 @@ class WorldWindow : public Fl_Gl_Window {
         Tree tree3;
         Tree tree4;
     
+        //Forest of 5 trees
+        Tree tree5;
+        Tree tree6;
+        Tree tree7;
+        Tree tree8;
+        Tree tree9;
+    
         //TeaPot
     
         TeaPot tp1;
@@ -69,6 +77,10 @@ class WorldWindow : public Fl_Gl_Window {
         //Sun
     
         Sphere sun;
+    
+        //Ferris Wheel
+    
+        Ferris frs;
     
 
         static const double FOV_X; // The horizontal field of view.

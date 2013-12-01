@@ -15,11 +15,11 @@
 // The control points for the track spline.
 const int   Track::TRACK_NUM_CONTROLS = 4;
 const float Track::TRACK_CONTROLS[TRACK_NUM_CONTROLS][3] =
-		{ { -20.0, -20.0, -20.0 }, { 20.0, -20.0, 40.0 },
-		  { 20.0, 20.0, -20.0 }, { -20.0, 20.0, 40.0 } };
+		{ { -20.0, -20.0, -15.0 }, { 20.0, -20.0, 50.0 },
+		  { 20.0, 20.0, -15.0 }, { -20.0, 20.0, 50.0 } };
 
 // The carriage energy and mass
-const float Track::TRAIN_ENERGY = 249.0f;
+const float Track::TRAIN_ENERGY = 300.0f;
 
 
 // Normalize a 3d vector.
@@ -54,6 +54,7 @@ bool Track::Initialize(float x, float y, float z)
     CubicBspline    refined(3, true);
     int		    n_refined;
     float	    p[3];
+    float       q[3];
     int		    i;
 
     // Create the track spline.
@@ -73,15 +74,62 @@ bool Track::Initialize(float x, float y, float z)
     track_list = glGenLists(1);
     glNewList(track_list, GL_COMPILE);
     glTranslatef(x, y, z);
-	glColor3f(1.0f, 1.0, 1.0f);
+	glColor3f(150/255.0f, 75/255.0f, 0.0f);
+    
+    glPushMatrix();
+    glTranslated(-2.5f, 0, -2.5f);
+    glDisable(GL_CULL_FACE);
+    
+    for ( float i = 0.0f ; i <= n_refined ; i = i + 1.5f )
+    {
+        refined.Evaluate_Point(i, q);
+        
+        glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+        glVertex3f(q[0], q[1], q[2]);
+        glVertex3f(q[0]+5.0f, q[1], q[2]);
+        glVertex3f(q[0]+5.0f, q[1]+1.0f, q[2]);
+        glVertex3f(q[0], q[1]+1.0f, q[2]);
+        glEnd();
+        
+        glBegin(GL_QUADS);
+        glNormal3f(0, -1, 0);
+        glVertex3f(q[0], q[1], q[2]);
+        glVertex3f(q[0], q[1]+1.0f, q[2]);
+        glVertex3f(q[0], q[1]+1.0f, q[2]-1.0f);
+        glVertex3f(q[0], q[1], q[2]-1.0f);
+        glEnd();
+        
+        glBegin(GL_QUADS);
+        glVertex3f(q[0]+5.0f, q[1], q[2]);
+        glVertex3f(q[0]+5.0f, q[1]+1.0f, q[2]);
+        glVertex3f(q[0]+5.0f, q[1]+1.0f, q[2]-1.0f);
+        glVertex3f(q[0]+5.0f, q[1], q[2]-1.0f);
+        glEnd();
+        
+        glBegin(GL_QUADS);
+        glNormal3f(0, 0, -1);
+        
+        glVertex3f(q[0], q[1], q[2]-1.0f);
+        glVertex3f(q[0]+5.0f, q[1], q[2]-1.0f);
+        glVertex3f(q[0]+5.0f, q[1]+1.0f, q[2]-1.0f);
+        glVertex3f(q[0], q[1]+1.0f, q[2]-1.0f);
+        glEnd();
+        
+        
+    }
+    
+    glEnable(GL_CULL_FACE);
+    glPopMatrix();
     
 	glBegin(GL_LINE_STRIP);
 	    for ( i = 0 ; i <= n_refined ; i++ )
 	    {
-		refined.Evaluate_Point((float)i, p);
-		glVertex3fv(p);
+            refined.Evaluate_Point((float)i, p);
+            glVertex3fv(p);
 	    }
 	glEnd();
+    
     glEndList();
 
     // Set up the train. At this point a cube is drawn. NOTE: The

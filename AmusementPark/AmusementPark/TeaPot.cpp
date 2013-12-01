@@ -33,7 +33,7 @@ bool TeaPot::Initialize(double x, double y, double z)
     
     // Load the image for the texture. The texture file has to be in
     // a place where it will be found.
-    if ( ! ( image_data = (ubyte*)tga_load("grasshd.tga", &image_width,
+    if ( ! ( image_data = (ubyte*)tga_load("Teapot.tga", &image_width,
                                            &image_height, TGA_TRUECOLOR_24) ) )
     {
         fprintf(stderr, "Ground::Initialize: Couldn't load grass.tga\n");
@@ -76,7 +76,7 @@ bool TeaPot::Initialize(double x, double y, double z)
     display_list = glGenLists(1);
     glNewList(display_list, GL_COMPILE);
     
-    glColor3f(119/255.0f,11/255.0f,0);
+    //glColor3f(119/255.0f,11/255.0f,0);
     
     glDisable(GL_CULL_FACE);
     
@@ -85,10 +85,10 @@ bool TeaPot::Initialize(double x, double y, double z)
     
     glRotated(90, 1, 0, 0);
     
-    //glEnable(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, texture_obj);
+    glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture_obj);
     glutSolidTeapot(3);
-    //glDisable(GL_TEXTURE_2D);
+    glDisable(GL_TEXTURE_2D);
     glEnable(GL_CULL_FACE);
     
     glEndList();
@@ -112,7 +112,7 @@ void TeaPot::Draw(void)
 
 void TeaPot::Update(float dt)
 {
-    gDegreesRotated -= 5.0f;
+    gDegreesRotated -= 1.0f;
     while(gDegreesRotated > 360.0f)
         gDegreesRotated -= 360.0f;
 }

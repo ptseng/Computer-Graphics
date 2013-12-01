@@ -26,9 +26,8 @@ Tree::~Tree(void)
     }
 }
 
-bool Tree::Initialize(double x, double y, double z, char * texture)
+bool Tree::Initialize(double x, double y, double z, char * texture, double scale)
 {
-    double scale = 1.0f;
     
     double height = 10.0f * scale;
     double stalkheightratio = 0.15f;
@@ -109,6 +108,9 @@ bool Tree::Initialize(double x, double y, double z, char * texture)
     tree = gluNewQuadric();
     gluQuadricNormals(tree, GLU_SMOOTH);
     gluQuadricTexture(tree, GL_TRUE);
+    
+    //Scale the tree
+    
     
     // Draw at this location
     glTranslatef(x, y, z);
